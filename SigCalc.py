@@ -70,7 +70,7 @@ def calc_prop_diff(size_treatment, size_control, prop_treatment, prop_control,
 
     # Use binomtest instead of binom_test
     HEALTH_TEST_pvalue = binomtest(size_control, size_control + size_treatment, expected_split_prop).pvalue
-    are_buckets_healthy = HEALTH_TEST_pvalue > 0.05
+    SRM = HEALTH_TEST_pvalue < 0.05
 
     # Calculate the p-value for the hypothesis test.
     test_stat = prop_diff / se
@@ -88,9 +88,9 @@ def calc_prop_diff(size_treatment, size_control, prop_treatment, prop_control,
         "Significant": significant,
         "Confidence Interval (Difference)": f"{round(confint[0] * 100, metric_precision)}% to {round(confint[1] * 100, metric_precision)}%",
         "Confidence Interval (Treatment Value)": f"{round(treatment_val_range[0] * 100, metric_precision)}% to {round(treatment_val_range[1] * 100, metric_precision)}%",
-        "VTCs in Control": f"{size_control:,}",
-        "VTCs in Treatment": f"{size_treatment:,}",
-        "Are Buckets Healthy?" : are_buckets_healthy
+        "Users in Control": f"{size_control:,}",
+        "Users in Treatment": f"{size_treatment:,}",
+        "Sample Ratio Mismatch detected?" : SRM
     }
 
     return pd.DataFrame([d], index=[result_title])
@@ -138,7 +138,7 @@ def calc_mean_diff(size_treatment, size_control, mean_treatment, mean_control,
     significant = "Significant" if pvalue < sig_threshold else "Not Significant"
     
     HEALTH_TEST_pvalue = binomtest(size_control, size_control + size_treatment, expected_split_prop).pvalue
-    are_buckets_healthy = HEALTH_TEST_pvalue > 0.05
+    SRM = HEALTH_TEST_pvalue < 0.05
 
     # Calculate Cohen's d
     cohen_d = mean_diff / np.sqrt((var_treatment + var_control) / 2)
@@ -151,9 +151,9 @@ def calc_mean_diff(size_treatment, size_control, mean_treatment, mean_control,
           "Significant" : significant,
           "Confidence Interval (Difference)" : f"{unit_prefix}{round(confint[0], metric_precision)} to {unit_prefix}{round(confint[1] , metric_precision)}{unit_suffix}",
           "Confidence Interval (Treatment Value)" : f"{unit_prefix}{round(treatment_val_range[0], metric_precision)}{unit_suffix} to {unit_prefix}{round(treatment_val_range[1] , metric_precision)}{unit_suffix}",
-          "VTCs in Control" : f"{size_control:,}" ,
-          "VTCs in Treatment" : f"{size_treatment:,}" ,
-          "Are Buckets Healthy?" : are_buckets_healthy,
+          "Users in Control" : f"{size_control:,}" ,
+          "Users in Treatment" : f"{size_treatment:,}" ,
+          "Sample Ratio Mismatch detected?" : SRM,
           "Cohen's d": round(cohen_d, metric_precision)
       }
 
@@ -318,7 +318,7 @@ def page_power_analysis():
                 
                 # Display results
                 results = {
-                    "MDE Format" : mde_values_str, 
+                    "MDE(%)" : mde_values_str, 
                     "MDE": mde_values,
                     "Sample Size": sample_sizes,
                     "Weeks Required": weeks_required
@@ -326,7 +326,7 @@ def page_power_analysis():
                 results_df = pd.DataFrame(results)
                 # Display table
                 st.subheader("Results")
-                st.dataframe(results_df[["MDE Format", "Sample Size", "Weeks Required"]], use_container_width=True)
+                st.dataframe(results_df[["MDE(%)", "Sample Size", "Weeks Required"]], use_container_width=True)
 
                 # Plot results
                 st.subheader("Visualization")
