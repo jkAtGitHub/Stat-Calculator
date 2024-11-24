@@ -1,2 +1,2 @@
-# JK-Stat-Calculator
+# JK Stat Calculator
  
