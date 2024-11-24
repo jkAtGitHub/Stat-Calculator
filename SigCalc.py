@@ -326,11 +326,11 @@ def page_power_analysis():
                 results_df = pd.DataFrame(results)
                 # Display table
                 st.subheader("Results")
-                st.dataframe(results_df[["MDE(%)", "Sample Size", "Weeks Required"]], use_container_width=True)
+                st.dataframe(results_df[[f"MDE({calc_type}%)", "Sample Size", "Weeks Required"]], use_container_width=True)
 
                 # Plot results
                 st.subheader("Visualization")
-                st.line_chart(results_df, x="MDE", y = "Sample Size", use_container_width=True)
+                st.line_chart(results_df, x=f"MDE ({calc_type})", y = "Sample Size", use_container_width=True)
 # Multi-page App Navigation
 def main():
     st.sidebar.title("Navigation")
