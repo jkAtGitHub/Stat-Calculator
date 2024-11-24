@@ -318,8 +318,8 @@ def page_power_analysis():
                 
                 # Display results
                 results = {
-                    "MDE(%)" : mde_values_str, 
-                    "MDE": mde_values,
+                    f"MDE({calc_type}%)" : mde_values_str, 
+                    f"MDE ({calc_type})": mde_values,
                     "Sample Size": sample_sizes,
                     "Weeks Required": weeks_required
                 }
