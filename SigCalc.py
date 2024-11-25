@@ -199,22 +199,22 @@ def page_significance_calculator():
             c1, c2 = st.columns(2)
             with c1: 
                 size_treatment = st.number_input("Treatment Sample Size", min_value=1, value=10000, step=1000)
-                prop_treatment = st.number_input("Treatment Proportion", min_value=0.0, max_value=1.0, value=.21, step=0.001)
+                prop_treatment = st.number_input("Treatment Proportion", min_value=0.0000, max_value=1.0000, value=.2100, step=0.0010)
             with c2:
                 size_control = st.number_input("Control Sample Size", min_value=1, value=10000, step=1000)
-                prop_control = st.number_input("Control Proportion", min_value=0.0, max_value=1.0, value=0.20, step=0.001)
+                prop_control = st.number_input("Control Proportion", min_value=0.0000, max_value=1.0000, value=0.2000, step=0.0010)
                 result_title = st.text_input("Results Title", value="Results")
 
         elif test_type == "Mean":
             c1, c2 = st.columns(2)
             with c1: 
                 size_treatment = st.number_input("Treatment Sample Size", min_value=1, value=10000, step=1000)
-                var_treatment = st.number_input("Treatment Variance", min_value=0.0, value=1.0, step=0.1)
-                mean_treatment = st.number_input("Treatment Mean", value=5.0, step=0.1)
+                var_treatment = st.number_input("Treatment Variance", min_value=0.000, value=1.000, step=0.1)
+                mean_treatment = st.number_input("Treatment Mean", value=5.000, step=0.100)
             with c2:
                 size_control = st.number_input("Control Sample Size", min_value=1, value=10000, step=1000)
-                mean_control = st.number_input("Control Mean", value=4.5, step=0.1)
-                var_control = st.number_input("Control Variance", min_value=0.0, value=1.0, step=0.1)
+                mean_control = st.number_input("Control Mean", value=4.500, step=0.100)
+                var_control = st.number_input("Control Variance", min_value=0.000, value=1.000, step=0.1000)
                 result_title = st.text_input("Results Title", value="Results")
 
         st.button('Calculate', on_click=click_button, args=["Sig Calc"])
